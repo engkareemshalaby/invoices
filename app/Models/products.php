@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+// use Illuminate\Database\Eloquent\Model\secions;
 
 class products extends Model
 {
@@ -12,7 +13,12 @@ class products extends Model
         'description',
         'section_id',
         'created_by',
-    ]; 
+    ];
+
+    public function section()
+    {
+        return $this->belongsTo(sections::class);
+    }
 
     use HasFactory;
 }

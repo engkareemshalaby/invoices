@@ -18,7 +18,7 @@ class ProductsController extends Controller
     {
         $sections = sections::all();
         $products = products::all();
-        return view('products.products',compact('sections','products'));
+        return view('products.products', compact('sections', 'products'));
     }
 
     /**
@@ -41,17 +41,16 @@ class ProductsController extends Controller
     {
         //return $request;
         $input = $request->all();
-        
-           // $id = sections::where('section_name',$request->section_name)->first()->id;
-            products::create([
-                'product_name' => $request->product_name,
-                'description' => $request->description,
-                'section_id' =>$request->section_id,
-                'created_by' => (Auth::user()->name),
-            ]);
-            session()->flash('Add','تم التسجيل بنجاح');
-            return redirect('/products');
-        
+
+        // $id = sections::where('section_name',$request->section_name)->first()->id;
+        products::create([
+            'product_name' => $request->product_name,
+            'description' => $request->description,
+            'section_id' => $request->section_id,
+            'created_by' => (Auth::user()->name),
+        ]);
+        session()->flash('Add', 'تم التسجيل بنجاح');
+        return redirect('/products');
     }
 
     /**
@@ -94,8 +93,14 @@ class ProductsController extends Controller
      * @param  \App\Models\products  $products
      * @return \Illuminate\Http\Response
      */
-    public function destroy(products $products)
+    public function destroy(Request $request)
     {
-        //
+        // return $request;
+        $pruduct = products::findOrFail($request->id);
+        //return $id ;
+        $pruduct->delete();
+
+        session()->flash('Delete','تم الحذف بنجاح');
+        return redirect()->back();
     }
 }
